@@ -1,2 +1,18 @@
+# Python cache files
 __pycache__/
+*.py[cod]
+
+# Instance folder (contains sensitive data like the database)
 instance/
+
+# Environment files
+.env
+*.env
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
