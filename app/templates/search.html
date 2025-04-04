@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Contraseña</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Búsqueda de contraseña</h1>
+        <button class="logout-button">Log out</button>
+        <form method="GET" action="/view">
+            <input type="text" name="query" placeholder="Buscar cuenta" value="{{ query }}" class="search-input">
+            <button type="submit" class="search-button">Buscar</button>
+        </form>
+        <table class="password-table">
+            <thead>
+                <tr>
+                    <th>CUENTA</th>
+                    <th>CONTRASEÑA</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for username, password in data %}
+                <tr>
+                    <td>{{ username }}</td>
+                    <td>************</td>
+                    <td><button class="copy-button">📋</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -12,5 +12,6 @@ def create_app():
 
     app.register_blueprint(passwords_bp)
     app.add_url_rule('/', 'home', home)
+    app.secret_key = '1234'  # Cambia esto por una clave secreta segura
 
     return app
