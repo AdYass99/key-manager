@@ -23,7 +23,7 @@ def config():
 
 @passwords_bp.route('/delete/<int:user_id>', methods=['POST'])
 def delete_password(user_id):
-    query_set("DELETE FROM users WHERE id = ?", (user_id,))
+    query_set(f"DELETE FROM users WHERE id = {user_id}")
     return redirect(url_for('passwords.config'))
 
 
