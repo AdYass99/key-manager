@@ -22,11 +22,15 @@
                 </tr>
             </thead>
             <tbody>
-                {% for username, password in data %}
+                {% for user_id, username, password in data %}
                 <tr>
                     <td>{{ username }}</td>
-                    <td>************</td>
-                    <td><button class="copy-button">📋</button></td>
+                    <td>{{ password }}</td>
+                    <td>
+                        <form action="/copy/{{ user_id }}" method="GET" style="display:inline;">
+                            <button type="submit" class="copy-button">📋</button>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
