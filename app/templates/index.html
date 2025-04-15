@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autenticación</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>Autentificación</h1>
-        <form action="/login" method="POST">
-            <input type="password" placeholder="Introduce la contraseña" name="password" class="password-input">
-            <button type="submit" class="login-button">Log In</button>
-        </form>
-    </div>
-</body>
-</html>
+{% extends "skeleton.html" %}
+
+{% block title %}Autenticación{% endblock %}
+
+{% block content %}
+<h1>Autentificación</h1>
+<form action="/login" method="POST">
+    <input type="password" placeholder="Introduce la contraseña" name="password" class="password-input">
+    <button type="submit" class="login-button">Log In</button>
+</form>
+{% endblock %}

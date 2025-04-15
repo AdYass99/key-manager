@@ -1,42 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuración</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>Configuración</h1>
-        <button class="logout-button">Log out</button>
-        <form action="/add" method="POST">
-            <input type="text" name="username" placeholder="Nueva cuenta" required>
-            <input type="password" name="password" placeholder="Nueva contraseña" required>
-            <button type="submit" class="add-button">Añadir</button>
-        </form>
-        <table class="password-table">
-            <thead>
-                <tr>
-                    <th>CUENTA</th>
-                    <th>CONTRASEÑA</th>
-                    <th>ACCIONES</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user_id, username, password in data %}
-                <tr>
-                    <td>{{ username }}</td>
-                    <td>{{ password }}</td>
-                    <td>
-                        <form action="/delete/{{ user_id }}" method="POST" style="display:inline;">
-                            <button type="submit" class="delete-button">🗑️</button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+{% extends "skeleton.html" %}
+
+{% block title %}Configuración{% endblock %}
+
+{% block content %}
+<h1>Configuración</h1>
+<button class="logout-button" onclick="window.location.href='/'">Log out</button>
+<button class="logout-button" onclick="window.location.href='/view'">Busqueda</button>
+<form action="/add" method="POST">
+    <input type="text" name="username" placeholder="Nueva cuenta" required>
+    <input type="password" name="password" placeholder="Nueva contraseña" required>
+    <button type="submit" class="add-button">Añadir</button>
+</form>
+<table class="password-table">
+    <thead>
+        <tr>
+            <th>CUENTA</th>
+            <th>CONTRASEÑA</th>
+            <th>ACCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user_id, username, password in data %}
+        <tr>
+            <td>{{ username }}</td>
+            <td>************</td>
+            <td>
+                <form action="/delete/{{ user_id }}" method="POST" style="display:inline;">
+                    <button type="submit" class="delete-button">🗑️</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
