@@ -22,4 +22,10 @@ def query_set(query):
     conn.close()
 
 def init_db():
-        query_set("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, password TEXT)")
+        query_set("CREATE TABLE IF NOT EXISTS users (" +
+                  "id INTEGER PRIMARY KEY, " +
+                  "username TEXT, " +
+                  "password TEXT, " +
+                  "salt TEXT, " +
+                  "nonce TEXT, " +
+                  "tag TEXT)")
