@@ -1,46 +1,68 @@
-{% extends "skeleton.html" %}
-
-{% block title %}Configuración{% endblock %}
-
-{% block content %}
+{% extends "skeleton.html" %} {% block title %}Configuración{% endblock %} {%
+block content %}
 <h1>Configuración</h1>
-<button class="logout-button" onclick="window.location.href='/'">Log out</button>
-<button class="logout-button" onclick="window.location.href='/view'">Busqueda</button>
+<button class="logout-button" onclick="window.location.href='/'">
+  Log out
+</button>
+<button class="logout-button" onclick="window.location.href='/view'">
+  Busqueda
+</button>
 
 <table class="password-table">
-    <thead>
-        <tr>
-            <th>CUENTA</th>
-            <th>CONTRASEÑA</th>
-            <th>ACCIONES</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <form action="/add" method="POST" style="display:inline;">
-            <td>
-                <input type="text" name="username" placeholder="Nueva cuenta" required>
-            </td>
-            <td>
-                <input type="password" name="password" placeholder="Nueva contraseña" value="{{ generated_password or '' }}" required>
-            </td>
-            <td>
-                    <button type="submit" class="add-button">➕</button>
-                    <button type="button" onclick="window.location.href='/generate'" class="generate-button">⚙️</button>
-                                </td>
-            </form>
-        </tr>
-        {% for user_id, username, password in data %}
-        <tr>
-            <td>{{ username }}</td>
-            <td>{{ password }}</td>
-            <td>
-                <form action="/delete/{{ user_id }}" method="POST" style="display:inline;">
-                    <button type="submit" class="delete-button">🗑️</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
+  <thead>
+    <tr>
+      <th>CUENTA</th>
+      <th>CONTRASEÑA</th>
+      <th>ACCIONES</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <form action="/add" method="POST" style="display: inline">
+        <td>
+          <input
+            type="text"
+            name="username"
+            placeholder="Nueva cuenta"
+            required
+          />
+        </td>
+        <td>
+          <input
+            type="password"
+            name="password"
+            placeholder="Nueva contraseña"
+            value="{{ generated_password or '' }}"
+            required
+          />
+        </td>
+        <td>
+          <button type="submit" class="add-button">➕</button>
+          <button
+            type="button"
+            onclick="window.location.href='/generate'"
+            class="generate-button"
+          >
+            ⚙️
+          </button>
+        </td>
+      </form>
+    </tr>
+    {% for user_id, username, password in data %}
+    <tr>
+      <td>{{ username }}</td>
+      <td>{{ password }}</td>
+      <td>
+        <form
+          action="/delete/{{ user_id }}"
+          method="POST"
+          style="display: inline"
+        >
+          <button type="submit" class="delete-button">🗑️</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 {% endblock %}

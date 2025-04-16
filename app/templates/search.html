@@ -1,34 +1,44 @@
-{% extends "skeleton.html" %}
-
-{% block title %}Búsqueda de Contraseña{% endblock %}
-
-{% block content %}
+{% extends "skeleton.html" %} {% block title %}Búsqueda de Contraseña{% endblock
+%} {% block content %}
 <h1>Búsqueda de contraseña</h1>
-<button class="logout-button" onclick="window.location.href='/'">Log out</button>
-<button class="logout-button" onclick="window.location.href='/config'">Configuración</button>
-<form method="GET" onsubmit="this.action='/view/' + encodeURIComponent(this.query.value)">
-    <input type="text" name="query" placeholder="Buscar cuenta" value="{{ query }}" class="search-input">
-    <button type="submit" class="search-button">Buscar</button>
+<button class="logout-button" onclick="window.location.href='/'">
+  Log out
+</button>
+<button class="logout-button" onclick="window.location.href='/config'">
+  Configuración
+</button>
+<form
+  method="GET"
+  onsubmit="this.action='/view/' + encodeURIComponent(this.query.value)"
+>
+  <input
+    type="text"
+    name="query"
+    placeholder="Buscar cuenta"
+    value="{{ query }}"
+    class="search-input"
+  />
+  <button type="submit" class="search-button">Buscar</button>
 </form>
 <table class="password-table">
-    <thead>
-        <tr>
-            <th>CUENTA</th>
-            <th>CONTRASEÑA</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for id, username, password in data %}
-        <tr>
-            <td>{{ username }}</td>
-            <td>{{ password }}</td>
-            <td>
-                <form action="/copy/{{ id }}" method="GET" style="display:inline;">
-                    <button type="submit" class="copy-button">📋</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
+  <thead>
+    <tr>
+      <th>CUENTA</th>
+      <th>CONTRASEÑA</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for id, username, password in data %}
+    <tr>
+      <td>{{ username }}</td>
+      <td>{{ password }}</td>
+      <td>
+        <form action="/copy/{{ id }}" method="GET" style="display: inline">
+          <button type="submit" class="copy-button">📋</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 {% endblock %}
