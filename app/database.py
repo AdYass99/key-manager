@@ -1,12 +1,10 @@
 import sqlite3
-DATABASE='instance/passwords.db'
-# This file contains functions to interact with the SQLite database.
-# It includes functions to query data and set data in the database.
-# The database is used to store user passwords securely.
-# The database is initialized with a table for users if it doesn't exist.
+from flask import current_app
+import os
 
 def query_get(query):
-    conn = sqlite3.connect(DATABASE)
+    DATABASE_PATH = current_app.config['DATABASE_PATH']
+    conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
     cursor.execute(query)
     data = cursor.fetchall()
@@ -15,17 +13,22 @@ def query_get(query):
     return data
 
 def query_set(query):
-    conn = sqlite3.connect(DATABASE)
+    DATABASE_PATH = current_app.config['DATABASE_PATH']
+    conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
     cursor.execute(query)
     conn.commit()
     conn.close()
 
 def init_db():
-        query_set("CREATE TABLE IF NOT EXISTS users (" +
-                  "id INTEGER PRIMARY KEY, " +
-                  "username TEXT, " +
-                  "password TEXT, " +
-                  "salt TEXT, " +
-                  "nonce TEXT, " +
-                  "tag TEXT)")
+    DATABASE_PATH = current_app.config['DATABASE_PATH']
+    if not os.path.exists(DATABASE_PATH):
+        os.makedirs(os.path.dirname(DATABASE_PATH), exist_ok=True)
+        
+    query_set("CREATE TABLE IF NOT EXISTS users (" +
+                "id INTEGER PRIMARY KEY, " +
+                "username TEXT, " +
+                "password TEXT, " +
+                "salt TEXT, " +
+                "nonce TEXT, " +
+                "tag TEXT)")

@@ -20,45 +20,28 @@ block content %}
     <tr>
       <form action="/add" method="POST" style="display: inline">
         <td>
-          <input
-            type="text"
-            name="username"
-            placeholder="Nueva cuenta"
-            required
-          />
+          <input type="text" name="username" placeholder="Nueva cuenta" required />
         </td>
         <td>
-          <input
-            type="password"
-            name="password"
-            placeholder="Nueva contraseña"
-            value="{{ generated_password or '' }}"
-            required
-          />
+          <input type="password" name="password" placeholder="Nueva contraseña" value="{{ generated_password or '' }}"
+            required />
         </td>
         <td>
           <button type="submit" class="config-button">➕</button>
-          <button
-            type="button"
-            onclick="window.location.href='/generate'"
-            class="config-button"
-          >
+          <button type="button" onclick="window.location.href='/generate'" class="config-button">
             ⚙️
           </button>
         </td>
       </form>
     </tr>
-    {% for user_id, username, password in data %}
+    {% for id, username, password in data %}
     <tr>
       <td>{{ username }}</td>
       <td>{{ password }}</td>
       <td>
-        <form
-          action="/delete/{{ user_id }}"
-          method="POST"
-          style="display: inline"
-        >
-          <button type="submit" class="config-button">🗑️</button>
+        <form action="/delete" method="POST" style="display: inline">
+          <input type="hidden" name="user_id" value="{{ id }}">
+          <button type="submit" class="config-button">📋</button>
         </form>
       </td>
     </tr>

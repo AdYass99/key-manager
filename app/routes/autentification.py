@@ -1,6 +1,7 @@
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from flask import request, Blueprint, render_template, redirect, url_for , session
+from flask import current_app
 import json
 import hmac
 import hashlib
@@ -9,7 +10,6 @@ import os
 autentification_bp = Blueprint('autentification', __name__)
 ph = PasswordHasher(time_cost=2, memory_cost=102400, parallelism=8)
 
-SECRET_KEY = b'tfg_uoc_key_manager'  
 FILE_PATH=os.path.join('instance','master_password.json')
 
 def verify_master_key(password):
@@ -24,6 +24,7 @@ def save_master_password_hash(hash_value):
     # Crear el directorio si no existe
     os.makedirs(os.path.dirname(FILE_PATH), exist_ok=True)
     # Crear un HMAC para verificar la integridad del archivo
+    SECRET_KEY = current_app.config['SECRET_KEY'].encode('utf-8')
     hmac_value = hmac.new(SECRET_KEY, hash_value.encode(), hashlib.sha256).hexdigest()
     data = {
         'master_password_hash': hash_value,
@@ -40,6 +41,7 @@ def load_master_password_hash():
             hash_value = data['master_password_hash']
             hmac_value = data['hmac']
             # Verificar la integridad del archivo
+            SECRET_KEY = current_app.config['SECRET_KEY'].encode('utf-8')
             expected_hmac = hmac.new(SECRET_KEY, hash_value.encode(), hashlib.sha256).hexdigest()
             if hmac_value != expected_hmac:
                 raise ValueError("El archivo ha sido modificado manualmente o está corrupto.")
