@@ -2,6 +2,8 @@ from flask import request, Blueprint, render_template, redirect, url_for , sessi
 from app.database import query_get, query_set
 from app.routes.criptography import encrypt, decrypt
 import pyperclip
+import random
+import string
 
 passwords_bp = Blueprint('passwords', __name__)
 
@@ -53,3 +55,9 @@ def config():
 def delete(user_id):
     query_set(f"DELETE FROM users WHERE id = {user_id}")
     return redirect(url_for('passwords.config'))
+
+@passwords_bp.route('/generate', methods=['GET'])
+def GeneratePassword():
+    generated_password = ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=12))
+    data = query_get("SELECT id, username, password FROM users")
+    return render_template('config.html',data=data, generated_password=generated_password)

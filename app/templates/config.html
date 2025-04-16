@@ -22,11 +22,12 @@
                 <input type="text" name="username" placeholder="Nueva cuenta" required>
             </td>
             <td>
-                <input type="password" name="password" placeholder="Nueva contraseña" required>
+                <input type="password" name="password" placeholder="Nueva contraseña" value="{{ generated_password or '' }}" required>
             </td>
             <td>
                     <button type="submit" class="add-button">➕</button>
-                </td>
+                    <button type="button" onclick="window.location.href='/generate'" class="generate-button">⚙️</button>
+                                </td>
             </form>
         </tr>
         {% for user_id, username, password in data %}

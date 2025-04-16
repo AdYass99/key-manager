@@ -21,7 +21,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-.logout-button, .add-button, .delete-button, .search-button {
+.logout-button, .add-button, .delete-button, .search-button, .generate-button {
     background-color: #333;
     color: #fff;
     border: none;
