@@ -4,11 +4,12 @@
 <button class="logout-button" onclick="window.location.href='/'">
   Log out
 </button>
-<button class="logout-button" onclick="window.location.href='/config'">
+<button class="navigation-button" onclick="window.location.href='/config'">
   Configuración
 </button>
 <form
   method="GET"
+  class="search-form"
   onsubmit="this.action='/view/' + encodeURIComponent(this.query.value)"
 >
   <input
@@ -18,7 +19,7 @@
     value="{{ query }}"
     class="search-input"
   />
-  <button type="submit" class="search-button">Buscar</button>
+  <button type="submit" class="search-button">🔍</button>
 </form>
 <table class="password-table">
   <thead>
@@ -34,7 +35,7 @@
       <td>{{ password }}</td>
       <td>
         <form action="/copy/{{ id }}" method="GET" style="display: inline">
-          <button type="submit" class="copy-button">📋</button>
+          <button type="submit" class="config-button">📋</button>
         </form>
       </td>
     </tr>
