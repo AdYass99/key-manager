@@ -10,7 +10,7 @@ autentification_bp = Blueprint('autentification', __name__)
 ph = PasswordHasher(time_cost=2, memory_cost=102400, parallelism=8)
 
 SECRET_KEY = b'tfg_uoc_key_manager'  
-FILE_PATH='instance\master_password.json'
+FILE_PATH=os.path.join('instance','master_password.json')
 
 def verify_master_key(password):
     try:
