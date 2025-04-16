@@ -2,4 +2,7 @@ Flask
 sqlite3
 pycryptodomex
 argon2-cffi
+json
+hmac
+hashlib
 ```

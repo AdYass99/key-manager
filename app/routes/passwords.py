@@ -1,7 +1,6 @@
 from flask import request, Blueprint, render_template, redirect, url_for , session
 from app.database import query_get, query_set
 from app.routes.criptography import encrypt, decrypt
-from app.routes.autentification import master_password
 import pyperclip
 
 passwords_bp = Blueprint('passwords', __name__)
@@ -10,6 +9,7 @@ passwords_bp = Blueprint('passwords', __name__)
 def add():
     username = request.form['username']
     password = request.form['password']
+    master_password = session.get('master_password')
     encrypted_password = encrypt(password, master_password)
     query_set(f"INSERT INTO users (username, password,salt,nonce,tag) VALUES ("   +
               f"'{username}', " +
@@ -32,6 +32,7 @@ def search(user_id):
 
 @passwords_bp.route('/copy/<int:user_id>', methods=['GET'])
 def copy(user_id):
+    master_password = session.get('master_password')
     data = query_get(f"SELECT password,salt,nonce,tag FROM users WHERE Id = {user_id}")
     encrypted_password = {
         'cipher_text': data[0][0],

@@ -6,11 +6,7 @@
 <h1>Configuración</h1>
 <button class="logout-button" onclick="window.location.href='/'">Log out</button>
 <button class="logout-button" onclick="window.location.href='/view'">Busqueda</button>
-<form action="/add" method="POST">
-    <input type="text" name="username" placeholder="Nueva cuenta" required>
-    <input type="password" name="password" placeholder="Nueva contraseña" required>
-    <button type="submit" class="add-button">Añadir</button>
-</form>
+
 <table class="password-table">
     <thead>
         <tr>
@@ -20,10 +16,23 @@
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <form action="/add" method="POST" style="display:inline;">
+            <td>
+                <input type="text" name="username" placeholder="Nueva cuenta" required>
+            </td>
+            <td>
+                <input type="password" name="password" placeholder="Nueva contraseña" required>
+            </td>
+            <td>
+                    <button type="submit" class="add-button">➕</button>
+                </td>
+            </form>
+        </tr>
         {% for user_id, username, password in data %}
         <tr>
             <td>{{ username }}</td>
-            <td>************</td>
+            <td>{{ password }}</td>
             <td>
                 <form action="/delete/{{ user_id }}" method="POST" style="display:inline;">
                     <button type="submit" class="delete-button">🗑️</button>
