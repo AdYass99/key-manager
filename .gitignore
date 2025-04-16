@@ -1,7 +1,2 @@
-# Instance folder (contains sensitive data like the database)
 instance/
-
-# Virtual environment
-app/routes/__pycache__/
-app/__pycache__/
-instance/passwords.db
+**/__pycache__/

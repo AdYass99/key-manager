@@ -8,9 +8,8 @@ import os
 
 autentification_bp = Blueprint('autentification', __name__)
 ph = PasswordHasher(time_cost=2, memory_cost=102400, parallelism=8)
-master_password = None
 
-SECRET_KEY = b'super_secret_key'  # Cambia esto por una clave segura
+SECRET_KEY = b'tfg_uoc_key_manager'  
 FILE_PATH='instance\master_password.json'
 
 def verify_master_key(password):
