@@ -57,7 +57,7 @@ def delete(user_id):
     return redirect(url_for('passwords.config'))
 
 @passwords_bp.route('/generate', methods=['GET'])
-def GeneratePassword():
+def generate():
     generated_password = ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=12))
     data = query_get("SELECT id, username, password FROM users")
     return render_template('config.html',data=data, generated_password=generated_password)
