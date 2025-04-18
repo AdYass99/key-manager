@@ -101,5 +101,5 @@ def decrypt_password():
         # Desencriptar la contraseña
         decrypted_password = decrypt(encrypted_password, master_password)
         return jsonify({'password': decrypted_password})
-    except Exception as e:
-        return jsonify({'error': 'Error al desencriptar la contraseña:'}), 500
+    except ValueError as e:
+        return jsonify({'error': f'Error al desencriptar la contraseña: {str(e)}'}), 500
