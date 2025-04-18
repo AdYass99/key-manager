@@ -20,13 +20,36 @@
       <td>{{ account_name }}</td>
       <td>{{ password }}</td>
       <td>
-        <form action="/copy" method="GET" style="display: inline">
-          <input type="hidden" name="password_id" value="{{ id }}">
-          <button type="submit" class="config-button">📋</button>
-        </form>
+          <button type="submit" class="config-button" onclick="copyDecryptedPassword('{{ id }}')">📋</button>
       </td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+<script>
+  async function copyDecryptedPassword(passwordId) {
+    try {
+      // Llamar a la API para desencriptar la contraseña
+      const response = await fetch('/decrypt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password_id: passwordId }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Copiar la contraseña desencriptada al portapapeles
+        await navigator.clipboard.writeText(data.password);
+        alert('Contraseña copiada al portapapeles');
+      } else {
+        alert(data.error || 'Error al copiar la contraseña');
+      }
+    } catch (error) {
+      alert(`Error al comunicarse con el servidor ${error.message}`);
+    }
+  }
+</script>
 {% endblock %}

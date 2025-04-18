@@ -7,7 +7,7 @@ import random
 import string
 
 import pyperclip
-from flask import (Blueprint, redirect, render_template, request, session,
+from flask import (Blueprint, jsonify, redirect, render_template, request, session,
                    url_for)
 
 from app.db.database import query_get, query_set
@@ -95,3 +95,28 @@ def generate():
     generated_password = ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=12))
     data = query_get("SELECT id, account_name, password FROM passwords")
     return render_template('config.html',data=data, generated_password=generated_password)
+
+@passwords_bp.route('/decrypt', methods=['POST'])
+@login_required
+def decrypt_password():
+    password_id = request.json.get('password_id')
+    master_password = session.get('master_password')
+
+    # Obtener la contraseña cifrada de la base de datos
+    data = query_get(f"SELECT password, salt, nonce, tag FROM passwords WHERE id = {password_id}")
+    if not data:
+        return jsonify({'error': 'Contraseña no encontrada'}), 404
+
+    encrypted_password = {
+        'cipher_text': data[0][0],
+        'salt': data[0][1],
+        'nonce': data[0][2],
+        'tag': data[0][3]
+    }
+
+    try:
+        # Desencriptar la contraseña
+        decrypted_password = decrypt(encrypted_password, master_password)
+        return jsonify({'password': decrypted_password})
+    except Exception as e:
+        return jsonify({'error': 'Error al desencriptar la contraseña:'}), 500
