@@ -2,3 +2,4 @@ Flask
 pycryptodomex
 argon2-cffi
 pyperclip
+pyopenssl
