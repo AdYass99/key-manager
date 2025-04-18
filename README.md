@@ -18,6 +18,7 @@
    - Las contraseñas se cifran utilizando AES-GCM.
    - La clave maestra se protege mediante hashing con Argon2.
 5. **Sesiones independientes**: Cada usuario tiene su propia sesión activa.
+6. **Soporte para HTTPS**: La aplicación puede ejecutarse con HTTPS para mayor seguridad.
 
 ---
 
@@ -48,10 +49,13 @@ key-manager
 │   └── passwords.db              # Base de datos SQLite
 ├── requirements.txt              # Dependencias del proyecto
 ├── run.py                        # Punto de entrada de la aplicación
+├── generate_cert.py              # Generacion de certificados (HTTPS)
 ├── Dockerfile                    # Configuración para Docker
 ├── docker-compose.yaml           # Configuración para Docker Compose
 ├── .gitignore                    # Archivos ignorados por Git
 ├── .dockerignore                 # Archivos ignorados por Docker
+├── cert.pem                      # Certificado SSL autogenerado
+├── key.pem                       # Clave privada SSL autogenerada
 └── README.md                     # Documentación del proyecto
 ```
 
@@ -85,14 +89,22 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-### 5. Ejecutar la aplicación
+### 5. Generar certificados SSL (opcional para HTTPS)
+Si necesitas HTTPS, ejecuta el siguiente comando para generar un certificado SSL autogenerado:
+```bash
+python generate_cert.py
+```
+
+Esto generará los archivos `cert.pem` y `key.pem`.
+
+### 6. Ejecutar la aplicación
 ```bash
 python run.py
 ```
 
-### 6. Acceder a la aplicación
-Abre tu navegador y navega a:  
-`http://127.0.0.1:5000/`
+### 7. Acceder a la aplicación
+- **HTTP**: `http://127.0.0.1:5000/`
+- **HTTPS** (si configuraste certificados): `https://127.0.0.1:5000/`
 
 ---
 
@@ -109,6 +121,7 @@ Abre tu navegador y navega a:
 - **`/copy`**: Copia una contraseña al portapapeles.
 - **`/delete`**: Elimina una contraseña específica.
 - **`/generate`**: Genera una contraseña aleatoria.
+- **`/decrypt`**: Desencripta una contraseña (usada internamente por el frontend).
 
 ---
 
@@ -125,7 +138,10 @@ Abre tu navegador y navega a:
    - Cada usuario tiene su propia sesión activa.
    - Las rutas están protegidas con un decorador `@login_required`.
 
-4. **Recomendaciones**:
+4. **Soporte para HTTPS**:
+   - La aplicación puede ejecutarse con HTTPS utilizando certificados autogenerados.
+
+5. **Recomendaciones**:
    - Cambia la clave secreta (`SECRET_KEY`) en producción.
    - Usa HTTPS para proteger la comunicación entre el cliente y el servidor.
 
@@ -144,8 +160,8 @@ docker-compose up
 ```
 
 ### Acceder a la aplicación
-Abre tu navegador y navega a:  
-`http://127.0.0.1:5000/`
+- **HTTP**: `http://127.0.0.1:5000/`
+- **HTTPS**: Configura los certificados en el contenedor si es necesario.
 
 ---
 
@@ -155,6 +171,8 @@ Abre tu navegador y navega a:
 - **pycryptodomex**: Para cifrado y descifrado de contraseñas.
 - **argon2-cffi**: Para hashing seguro de contraseñas.
 - **pyperclip**: Para copiar contraseñas al portapapeles.
+- **pyopenssl**: Para habilitar HTTPS.
+- **cryptography**: Para generar certificados SSL.
 
 ---
 

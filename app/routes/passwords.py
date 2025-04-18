@@ -59,22 +59,6 @@ def view():
                 """)
     return render_template('search.html', data=data)
 
-@passwords_bp.route('/copy', methods=['GET'])
-@login_required
-def copy():
-    password_id = request.args.get('password_id')
-    master_password = session.get('master_password')
-    data = query_get(f"SELECT password,salt,nonce,tag FROM passwords WHERE Id = {password_id}")
-    encrypted_password = {
-        'cipher_text': data[0][0],
-        'salt': data[0][1],
-        'nonce': data[0][2],
-        'tag': data[0][3]
-    }
-    decrypted_password = decrypt(encrypted_password, master_password)
-    pyperclip.copy(decrypted_password)
-    return redirect(request.referrer)
-
 @passwords_bp.route('/config', methods=['GET'])
 @login_required
 def config():
