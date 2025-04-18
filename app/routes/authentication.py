@@ -8,7 +8,7 @@ from flask import (Blueprint, flash, redirect, render_template, request,
                    session, url_for)
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from app.database import query_get, query_set
+from app.db.database import query_get, query_set
 
 autentification_bp = Blueprint('autentification', __name__)
 

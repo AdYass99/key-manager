@@ -7,9 +7,9 @@ import os
 
 from flask import Flask
 
-from app.database import init_db
-from app.routes.autentification import autentification_bp
-from app.routes.home import home
+from app.db.database import init_db
+from app.routes.authentication import autentification_bp
+from app.routes.main import home
 from app.routes.passwords import passwords_bp
 
 

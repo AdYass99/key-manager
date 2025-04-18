@@ -10,8 +10,8 @@ import pyperclip
 from flask import (Blueprint, redirect, render_template, request, session,
                    url_for)
 
-from app.database import query_get, query_set
-from app.routes.criptography import decrypt, encrypt
+from app.db.database import query_get, query_set
+from app.securtiy.criptography import decrypt, encrypt
 from app.utils import login_required
 
 passwords_bp = Blueprint('passwords', __name__)

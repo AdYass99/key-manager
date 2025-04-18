@@ -1,50 +1,76 @@
 # Key Manager
 
-Este proyecto es una aplicación Flask para gestionar contraseñas de forma segura. Permite a los usuarios agregar, ver, copiar y eliminar contraseñas, además de generar contraseñas aleatorias.
+**Key Manager** es una aplicación Flask diseñada para gestionar contraseñas de forma segura. Permite a múltiples usuarios registrarse, iniciar sesión y gestionar sus contraseñas personales. Las contraseñas se almacenan cifradas y protegidas mediante una clave maestra única para cada usuario.
 
-## Project Structure
+---
 
-```
+## 🚀 Funcionalidades principales
+
+1. **Registro de usuarios**: Los usuarios pueden registrarse con un nombre de usuario y una contraseña maestra.
+2. **Inicio de sesión**: Los usuarios deben iniciar sesión para acceder a sus contraseñas.
+3. **Gestión de contraseñas**:
+   - Agregar nuevas contraseñas.
+   - Buscar contraseñas por nombre de cuenta.
+   - Copiar contraseñas al portapapeles.
+   - Eliminar contraseñas.
+   - Generar contraseñas aleatorias.
+4. **Seguridad**:
+   - Las contraseñas se cifran utilizando AES-GCM.
+   - La clave maestra se protege mediante hashing con Argon2.
+5. **Sesiones independientes**: Cada usuario tiene su propia sesión activa.
+
+---
+
+## 📂 Estructura del proyecto
+
+```plaintext
 key-manager
 ├── app
-│   ├── __init__.py
-│   ├── routes
-│   │   ├── criptography.py
-│   │   ├── home.py
-│   │   ├── passwords.py
-│   │   └── autentification.py
-│   ├── templates
-│   │   ├── index.html
-│   │   ├── config.html
-│   │   ├── search.html
-│   │   └── skeleton.html
+│   ├── __init__.py               # Inicialización de la aplicación Flask
+│   ├── db                        # Gestión de la base de datos SQLite
+│   │   └── database.py
+│   ├── routes                    # Rutas de la aplicación
+│   │   ├── authentication.py     # Rutas para login, registro y logout
+│   │   ├── main.py               # Ruta principal (home)
+│   │   ├── passwords.py          # Rutas para gestionar contraseñas
+│   ├── security                  # Funciones relacionadas con la seguridad
+│   │   └── criptography.py       # Funciones de cifrado y descifrado
+│   ├── templates                 # Plantillas HTML
+│   │   ├── base.html             # Plantilla base
+│   │   ├── index.html            # Página de inicio (login)
+│   │   ├── register.html         # Página de registro
+│   │   ├── config.html           # Página de configuración de contraseñas
+│   │   ├── search.html           # Página de búsqueda de contraseñas
 │   ├── static
-│   │   └── styles.css
-│   └── database.py
+│   │   └── styles.css            # Estilos CSS
+│   └── utils.py                  # Funciones auxiliares (decoradores, etc.)
 ├── instance
-│   └── passwords.db
-├── requirements.txt
-├── run.py
-├── Dockerfile
-├── docker-compose.yaml
-├── .gitignore
-└── README.md
+│   └── passwords.db              # Base de datos SQLite
+├── requirements.txt              # Dependencias del proyecto
+├── run.py                        # Punto de entrada de la aplicación
+├── Dockerfile                    # Configuración para Docker
+├── docker-compose.yaml           # Configuración para Docker Compose
+├── .gitignore                    # Archivos ignorados por Git
+├── .dockerignore                 # Archivos ignorados por Docker
+└── README.md                     # Documentación del proyecto
 ```
 
-## Setup Instructions
+---
 
-### 1. Clonar el repositorio:
+## 🛠️ Configuración del proyecto
+
+### 1. Clonar el repositorio
 ```bash
 git clone <repository-url>
 cd key-manager
 ```
 
-### 2. Crear un entorno virtual:
+### 2. Crear un entorno virtual
 ```bash
 python -m venv venv
 ```
 
-### 3. Activar el entorno virtual:
+### 3. Activar el entorno virtual
 - **Windows**:
   ```bash
   venv\Scripts\activate
@@ -54,79 +80,76 @@ python -m venv venv
   source venv/bin/activate
   ```
 
-### 4. Instalar las dependencias:
+### 4. Instalar las dependencias
 ```bash
 pip install -r requirements.txt
 ```
 
-### 5. Ejecutar la aplicación:
+### 5. Ejecutar la aplicación
 ```bash
 python run.py
 ```
 
-### 6. Acceder a la aplicación:
-Abre tu navegador y navega a `http://127.0.0.1:5000/`.
+### 6. Acceder a la aplicación
+Abre tu navegador y navega a:  
+`http://127.0.0.1:5000/`
 
 ---
 
-## Funcionalidades
+## 🌐 Rutas principales
 
-### Rutas principales:
-- **`/`**: Página de inicio para autenticación.
+### **Autenticación**
+- **`/login`**: Página de inicio de sesión.
+- **`/register`**: Página de registro de nuevos usuarios.
+- **`/logout`**: Cierra la sesión del usuario actual.
+
+### **Gestión de contraseñas**
+- **`/config`**: Página principal para agregar, eliminar y generar contraseñas.
 - **`/view`**: Página para buscar y ver contraseñas.
-- **`/config`**: Página para agregar, eliminar y generar contraseñas.
 - **`/copy`**: Copia una contraseña al portapapeles.
 - **`/delete`**: Elimina una contraseña específica.
 - **`/generate`**: Genera una contraseña aleatoria.
 
-### Operaciones:
-1. **Agregar una contraseña**:
-   - Navega a `/config`.
-   - Ingresa un nombre de usuario y una contraseña.
-   - Haz clic en el botón `➕`.
+---
 
-2. **Buscar una contraseña**:
-   - Navega a `/view`.
-   - Usa el campo de búsqueda para filtrar por nombre de usuario.
+## 🛡️ Seguridad
 
-3. **Copiar una contraseña**:
-   - Haz clic en el botón `📋` junto a la contraseña que deseas copiar.
+1. **Cifrado de contraseñas**:
+   - Las contraseñas se cifran utilizando AES-GCM.
+   - Cada contraseña se cifra con una clave derivada de la contraseña maestra del usuario.
 
-4. **Eliminar una contraseña**:
-   - Haz clic en el botón `🗑️` junto a la contraseña que deseas eliminar.
+2. **Hashing de claves maestras**:
+   - Las claves maestras se almacenan como hashes seguros utilizando Argon2.
 
-5. **Generar una contraseña aleatoria**:
-   - Navega a `/config` y haz clic en el botón `⚙️`.
+3. **Sesiones protegidas**:
+   - Cada usuario tiene su propia sesión activa.
+   - Las rutas están protegidas con un decorador `@login_required`.
+
+4. **Recomendaciones**:
+   - Cambia la clave secreta (`SECRET_KEY`) en producción.
+   - Usa HTTPS para proteger la comunicación entre el cliente y el servidor.
 
 ---
 
-## Uso con Docker
+## 🐳 Uso con Docker
 
-### Construir la imagen:
+### Construir la imagen
 ```bash
 docker build -t key-manager .
 ```
 
-### Ejecutar el contenedor:
+### Ejecutar el contenedor
 ```bash
 docker-compose up
 ```
 
-### Acceder a la aplicación:
-Abre tu navegador y navega a `http://127.0.0.1:5000/`.
+### Acceder a la aplicación
+Abre tu navegador y navega a:  
+`http://127.0.0.1:5000/`
 
 ---
 
-## Seguridad
-
-- Las contraseñas se almacenan cifradas utilizando AES-GCM.
-- La clave maestra se protege mediante hashing con Argon2.
-- Asegúrate de cambiar la clave secreta (`SECRET_KEY`) en producción.
-- Usa HTTPS para proteger la comunicación entre el cliente y el servidor.
-
----
-
-## Dependencias
+## 📋 Dependencias
 
 - **Flask**: Framework web.
 - **pycryptodomex**: Para cifrado y descifrado de contraseñas.
@@ -135,8 +158,28 @@ Abre tu navegador y navega a `http://127.0.0.1:5000/`.
 
 ---
 
-## Notas adicionales
+## 📌 Notas adicionales
 
 - La base de datos SQLite se encuentra en el directorio `instance/passwords.db`.
 - Asegúrate de que el directorio `instance` exista antes de ejecutar la aplicación.
 - Para restablecer la base de datos, elimina el archivo `passwords.db` y reinicia la aplicación.
+- Si usas Docker, el directorio `instance` se crea automáticamente.
+
+---
+
+## 👨‍💻 Contribuciones
+
+Si deseas contribuir al proyecto, por favor:
+1. Haz un fork del repositorio.
+2. Crea una rama para tu funcionalidad (`git checkout -b feature/nueva-funcionalidad`).
+3. Realiza un pull request.
+
+---
+
+## 📞 Soporte
+
+Si tienes preguntas o problemas, no dudes en abrir un issue en el repositorio.
+
+---
+
+¡Gracias por usar **Key Manager**! 🔐
