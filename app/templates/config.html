@@ -20,7 +20,7 @@ block content %}
     <tr>
       <form action="/add" method="POST" style="display: inline">
         <td>
-          <input type="text" name="username" placeholder="Nueva cuenta" required />
+          <input type="text" name="account_name" placeholder="Nueva cuenta" required />
         </td>
         <td>
           <input type="password" name="password" placeholder="Nueva contraseña" value="{{ generated_password or '' }}"
@@ -34,13 +34,13 @@ block content %}
         </td>
       </form>
     </tr>
-    {% for id, username, password in data %}
+    {% for id, account_name, password in data %}
     <tr>
-      <td>{{ username }}</td>
+      <td>{{ account_name }}</td>
       <td>{{ password }}</td>
       <td>
         <form action="/delete" method="POST" style="display: inline">
-          <input type="hidden" name="user_id" value="{{ id }}">
+          <input type="hidden" name="password_id" value="{{ id }}">
           <button type="submit" class="config-button">📋</button>
         </form>
       </td>

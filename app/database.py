@@ -24,11 +24,25 @@ def init_db():
     DATABASE_PATH = current_app.config['DATABASE_PATH']
     if not os.path.exists(DATABASE_PATH):
         os.makedirs(os.path.dirname(DATABASE_PATH), exist_ok=True)
+    
+    # Crear tabla de usuarios
+    query_set("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            master_password_hash TEXT NOT NULL
+        )
+    """)
         
-    query_set("CREATE TABLE IF NOT EXISTS users (" +
-                "id INTEGER PRIMARY KEY, " +
-                "username TEXT, " +
-                "password TEXT, " +
-                "salt TEXT, " +
-                "nonce TEXT, " +
-                "tag TEXT)")
+    query_set("""
+        CREATE TABLE IF NOT EXISTS passwords (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            account_name TEXT NOT NULL,
+            password TEXT,
+            salt TEXT,
+            nonce TEXT,
+            tag TEXT,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        )
+    """)

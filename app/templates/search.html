@@ -20,13 +20,13 @@
     </tr>
   </thead>
   <tbody>
-    {% for id, username, password in data %}
+    {% for id, account_name, password in data %}
     <tr>
-      <td>{{ username }}</td>
+      <td>{{ account_name }}</td>
       <td>{{ password }}</td>
       <td>
         <form action="/copy" method="GET" style="display: inline">
-          <input type="hidden" name="user_id" value="{{ id }}">
+          <input type="hidden" name="password_id" value="{{ id }}">
           <button type="submit" class="config-button">📋</button>
         </form>
       </td>
