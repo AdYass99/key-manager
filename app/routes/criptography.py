@@ -1,7 +1,9 @@
-from base64 import b64encode, b64decode
+import hashlib
+from base64 import b64decode, b64encode
+
 from Cryptodome.Cipher import AES
 from Cryptodome.Random import get_random_bytes
-import hashlib
+
 
 def encrypt(plain_text, password):
     salt = get_random_bytes(AES.block_size)

@@ -1,4 +1,8 @@
-from flask import Flask
+"""
+Este archivo es el punto de entrada para ejecutar la aplicación Flask.
+Se encarga de crear la instancia de la aplicación y ejecutarla en el puerto 5000.
+"""
+
 from app import create_app
 
 app = create_app()

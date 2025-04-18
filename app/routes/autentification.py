@@ -1,16 +1,17 @@
-from argon2 import PasswordHasher
-from argon2.exceptions import VerifyMismatchError
-from flask import flash, request, Blueprint, render_template, redirect, url_for , session
+"""
+    Autentification routes for the application.
+    This module contains the routes for user login, logout, and registration.
+    It uses Flask's Blueprint to organize the routes and handle user sessions.
+"""
+
+from flask import (Blueprint, flash, redirect, render_template, request,
+                   session, url_for)
+from werkzeug.security import check_password_hash, generate_password_hash
+
 from app.database import query_get, query_set
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask import current_app
-import json
-import hmac
-import hashlib
-import os
 
 autentification_bp = Blueprint('autentification', __name__)
-   
+
 @autentification_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -18,12 +19,12 @@ def login():
         password = request.form['password']
         user = query_get(f"SELECT id, master_password_hash FROM users WHERE username = '{username}'")
         if user and check_password_hash(user[0][1], password):
-            session['user_id'] = user[0][0] 
+            session['user_id'] = user[0][0]
             session['username'] = username
             session['master_password'] = password
             return redirect(url_for('passwords.view'))
         else:
-            flash('Usuario o contraseña incorrectos', 'error')        
+            flash('Usuario o contraseña incorrectos', 'error')
     return render_template('index.html')
 
 @autentification_bp.route('/logout')
@@ -44,7 +45,10 @@ def register():
         else:
             # Guardar el nuevo usuario con la contraseña hasheada
             hashed_password = generate_password_hash(password)
-            query_set(f"INSERT INTO users (username, master_password_hash) VALUES ('{username}', '{hashed_password}')")
+            query_set(f"""
+                INSERT INTO users (username, master_password_hash)
+                      VALUES ('{username}', '{hashed_password}')
+                      """)
             flash('Usuario registrado con éxito', 'success')
             return redirect(url_for('autentification.login'))
 

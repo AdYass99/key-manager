@@ -1,6 +1,16 @@
-import sqlite3
-from flask import current_app
+"""
+Database module for managing SQLite database connections and queries.
+This module provides functions to initialize the database, execute queries,
+and manage user and password data.
+It is designed to be used with a Flask application and
+relies on the Flask context for configuration settings.
+"""
+
 import os
+import sqlite3
+
+from flask import current_app
+
 
 def query_get(query):
     DATABASE_PATH = current_app.config['DATABASE_PATH']
@@ -24,7 +34,7 @@ def init_db():
     DATABASE_PATH = current_app.config['DATABASE_PATH']
     if not os.path.exists(DATABASE_PATH):
         os.makedirs(os.path.dirname(DATABASE_PATH), exist_ok=True)
-    
+
     # Crear tabla de usuarios
     query_set("""
         CREATE TABLE IF NOT EXISTS users (
@@ -33,7 +43,7 @@ def init_db():
             master_password_hash TEXT NOT NULL
         )
     """)
-        
+ 
     query_set("""
         CREATE TABLE IF NOT EXISTS passwords (
             id INTEGER PRIMARY KEY AUTOINCREMENT,

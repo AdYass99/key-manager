@@ -1,10 +1,18 @@
-from flask import request, Blueprint, render_template, redirect, url_for , session
-from app.database import query_get, query_set
-from app.routes.criptography import encrypt, decrypt
-from app.utils import login_required
-import pyperclip
+"""
+This module contains the routes for managing passwords in the application.
+It includes routes for adding, viewing, copying, deleting, and generating passwords.
+"""
+
 import random
 import string
+
+import pyperclip
+from flask import (Blueprint, redirect, render_template, request, session,
+                   url_for)
+
+from app.database import query_get, query_set
+from app.routes.criptography import decrypt, encrypt
+from app.utils import login_required
 
 passwords_bp = Blueprint('passwords', __name__)
 
@@ -33,8 +41,7 @@ def add():
 @login_required
 def view():
     user_id = session['user_id']
-    account_name = request.args.get('filter') 
-    
+    account_name = request.args.get('filter')
     if account_name:
         data = query_get(f"""
                     SELECT id, account_name, password 
@@ -42,7 +49,7 @@ def view():
                     WHERE 
                         user_id = {user_id} And
                         account_name like '%{account_name}%'
-                    """) 
+                    """)
     else:
         data = query_get(f"""
                     SELECT id, account_name, password 
@@ -55,7 +62,7 @@ def view():
 @passwords_bp.route('/copy', methods=['GET'])
 @login_required
 def copy():
-    password_id = request.args.get('password_id') 
+    password_id = request.args.get('password_id')
     master_password = session.get('master_password')
     data = query_get(f"SELECT password,salt,nonce,tag FROM passwords WHERE Id = {password_id}")
     encrypted_password = {
@@ -78,7 +85,7 @@ def config():
 @passwords_bp.route('/delete', methods=['POST'])
 @login_required
 def delete():
-    password_id = request.form.get('password_id') ##TODO: cambiar a id de la tabla password
+    password_id = request.form.get('password_id')
     query_set(f"DELETE FROM passwords WHERE id = {password_id}")
     return redirect(url_for('passwords.config'))
 

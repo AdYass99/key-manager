@@ -1,5 +1,12 @@
+"""
+Utility functions for the application.
+This module contains helper functions for user authentication and session management.
+"""
+
 from functools import wraps
-from flask import session, redirect, url_for, flash
+
+from flask import flash, redirect, session, url_for
+
 
 def login_required(f):
     @wraps(f)
