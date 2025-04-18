@@ -1,4 +1,4 @@
 instance/*
-!instance/ .gitkeep
+!instance/.gitkeep
 **/__pycache__/
 *.pem
