@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block title %}Autenticación{% endblock %} {%
-    block content %}
+{% extends "base.html" %}
+ {% block title %}Autenticación{% endblock %} 
+ {% block content %}
 <form action="/register" method="POST">
     <input type="text" name="username" placeholder="Usuario" required>
     <input type="password" name="password" placeholder="Contraseña" required>

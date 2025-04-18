@@ -5,7 +5,7 @@ It also sets up the database connection and configuration settings.
 
 import os
 
-from flask import Flask
+from flask import Flask, session
 
 from app.db.database import init_db
 from app.routes.authentication import autentification_bp
@@ -21,6 +21,10 @@ def create_app():
     app.register_blueprint(autentification_bp)
     app.add_url_rule('/', 'home', home)
     app.secret_key = 'uoc'  # Cambia esto por una clave secreta segura
+
+    @app.context_processor
+    def inject_user():
+        return {'logged_in_user': session.get('username')}
 
     with app.app_context():
         init_db()

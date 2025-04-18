@@ -3,13 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Key Manager{% endblock %}</title>
+    <title>Key Manager</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='styles.css') }}"
     />
   </head>
   <body>
+    <header class="header-bar">
+       <!-- Sección izquierda -->
+       <div class="left-section">
+        {% if request.endpoint == 'passwords.config' %}
+          <button onclick="window.location.href='/view'">Búsqueda</button>
+        {% elif request.endpoint == 'passwords.view' %}
+          <button onclick="window.location.href='/config'">Configuración</button>
+        {% endif %}
+      </div>
+
+       <!-- Sección central -->
+       <div class="center-section">
+        <p class="title">{% block title %}{% endblock %}</p>
+      </div>
+
+      <!-- Sección derecha -->
+      <div class="right-section">
+        {% if logged_in_user %}
+          <span class="user-info">Usuario logueado: {{ logged_in_user }}</span>
+          <button class="logout-button" onclick="window.location.href='/logout'">
+            Log out
+          </button>
+        {% endif %}
+      </div>
+    </header>
     <div class="container">{% block content %} {% endblock %}</div>
   </body>
 </html>

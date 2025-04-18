@@ -1,4 +1,10 @@
 .git
 .vscode
+.dockerignore
+.gitignore
+
 **/__pycache__/
 **/instance/
+
+README.md
+docker-compose.yaml

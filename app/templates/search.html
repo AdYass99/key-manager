@@ -1,12 +1,7 @@
-{% extends "base.html" %} {% block title %}Búsqueda de Contraseña{% endblock
-%} {% block content %}
-<h1>Búsqueda de contraseña</h1>
-<button class="logout-button" onclick="window.location.href='/'">
-  Log out
-</button>
-<button class="navigation-button" onclick="window.location.href='/config'">
-  Configuración
-</button>
+{% extends "base.html" %} 
+{% block title %}Búsqueda de Contraseña{% endblock%} 
+{% block content %}
+
 <form action="/view" method="GET" class="search-form">
   <input type="text" name="filter" placeholder="Buscar cuenta" class="search-input" />
   <button type="submit" class="search-button">🔍</button>
