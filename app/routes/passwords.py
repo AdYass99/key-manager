@@ -6,7 +6,6 @@ It includes routes for adding, viewing, copying, deleting, and generating passwo
 import random
 import string
 
-import pyperclip
 from flask import (Blueprint, jsonify, redirect, render_template, request, session,
                    url_for)
 
