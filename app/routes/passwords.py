@@ -12,7 +12,7 @@ from flask import (Blueprint, redirect, render_template, request, session,
 
 from app.db.database import query_get, query_set
 from app.securtiy.criptography import decrypt, encrypt
-from app.utils import login_required
+from app.routes.authentication import login_required
 
 passwords_bp = Blueprint('passwords', __name__)
 

@@ -6,6 +6,9 @@
 
 from flask import (Blueprint, flash, redirect, render_template, request,
                    session, url_for)
+
+from functools import wraps
+
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.db.database import query_get, query_set
@@ -53,3 +56,12 @@ def register():
             return redirect(url_for('autentification.login'))
 
     return render_template('register.html')
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Por favor, inicia sesión para continuar', 'error')
+            return redirect(url_for('autentification.login'))
+        return f(*args, **kwargs)
+    return decorated_function
