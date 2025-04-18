@@ -1,8 +1,8 @@
+/* General */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     color: #333;
-    text-align: center;
     margin: 0;
     padding: 0;
     line-height: 1.6;
@@ -64,22 +64,35 @@ body {
     color: white;
 }
 
-
-.header-bar .logout-button{
-    background-color: #c52121; 
+/* Botón de logout */
+.header-bar .logout-button {
+    background-color: #c52121;
+    color: white;
+    font-size: 14px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
 }
 
 .header-bar .logout-button:hover {
     background-color: #aa0d0d;
 }
 
+/* Usuario logueado */
 .header-bar .user-info {
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #2e7d32;
+    padding: 5px 10px;
+    border-radius: 5px;
     margin-left: 10px;
 }
 
-
-
+/* Títulos */
 h1 {
     font-size: 28px;
     margin-bottom: 20px;
@@ -87,6 +100,7 @@ h1 {
     text-align: center;
 }
 
+/* Botones generales */
 button {
     background-color: #333;
     color: #fff;
@@ -102,13 +116,23 @@ button:hover {
     background-color: #404241;
 }
 
-.search-form {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 10px 0;
+/* Formularios */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
 }
 
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #4caf50;
+    outline: none;
+}
+
+/* Tablas */
 .password-table {
     width: 100%;
     border-collapse: collapse;
@@ -136,22 +160,7 @@ button:hover {
     background-color: #f1f1f1;
 }
 
-input[type="text"], input[type="password"] {
-    width: 100%; 
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box; 
-    font-size: 16px;
-}
-
-input[type="text"]:focus, input[type="password"]:focus {
-    border-color: #4caf50;
-    outline: none;
-}
-
-/* Responsive design */
+/* Responsividad */
 @media (max-width: 768px) {
     .container {
         padding: 15px;
@@ -174,6 +183,15 @@ input[type="text"]:focus, input[type="password"]:focus {
     input[type="text"], input[type="password"] {
         font-size: 14px;
     }
+
+    .header-bar .title {
+        font-size: 18px;
+    }
+
+    .header-bar .user-info {
+        font-size: 14px;
+        padding: 4px 8px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -193,5 +211,14 @@ input[type="text"]:focus, input[type="password"]:focus {
 
     input[type="text"], input[type="password"] {
         font-size: 12px;
+    }
+
+    .header-bar .title {
+        font-size: 16px;
+    }
+
+    .header-bar .user-info {
+        font-size: 12px;
+        padding: 3px 6px;
     }
 }
