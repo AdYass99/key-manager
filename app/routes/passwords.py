@@ -76,7 +76,8 @@ def delete():
 @login_required
 def generate():
     generated_password = ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=12))
-    data = query_get("SELECT id, account_name, password FROM passwords")
+    user_id = session['user_id']
+    data = query_get(f"SELECT id, account_name, password FROM passwords WHERE user_id = {user_id}")
     return render_template('config.html',data=data, generated_password=generated_password)
 
 @passwords_bp.route('/decrypt', methods=['POST'])
