@@ -5,6 +5,7 @@
 
 **/__pycache__/
 *.pem
+/test
 
 README.md
 docker-compose.yaml

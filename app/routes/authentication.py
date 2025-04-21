@@ -9,25 +9,55 @@ from flask import (Blueprint, flash, redirect, render_template, request,
 
 from functools import wraps
 
-from werkzeug.security import check_password_hash, generate_password_hash
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
+
+from datetime import datetime, timedelta
 
 from app.db.database import query_get, query_set
 
 autentification_bp = Blueprint('autentification', __name__)
+ph = PasswordHasher(time_cost=4, memory_cost=256000, parallelism=4)
+
+failed_attempts = {}
+max_attempts = 5
+lockout_time = timedelta(minutes=15)
 
 @autentification_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form['password']
+        ip_address = request.remote_addr
+          # Verificar intentos fallidos
+        if ip_address in failed_attempts:
+            attempts, last_attempt = failed_attempts[ip_address]
+            if attempts >= max_attempts and datetime.now() - last_attempt < lockout_time:
+                flash('Demasiados intentos fallidos. Intenta nuevamente más tarde.', 'error')
+                return render_template('index.html')
+
         user = query_get(f"SELECT id, master_password_hash FROM users WHERE username = '{username}'")
-        if user and check_password_hash(user[0][1], password):
-            session['user_id'] = user[0][0]
-            session['username'] = username
-            session['master_password'] = password
-            return redirect(url_for('passwords.view'))
+        if user :
+            # Verificar la contraseña usando Argon2
+            try:
+                ph.verify(user[0][1], password)
+                session['user_id'] = user[0][0]
+                session['username'] = username
+                session['master_password'] = password
+                if ip_address in failed_attempts:
+                    del failed_attempts[ip_address]  # Restablecer intentos fallidos
+                return redirect(url_for('passwords.view'))
+            except VerifyMismatchError:
+                pass
+        
+        # Registrar intento fallido
+        if ip_address not in failed_attempts:
+            failed_attempts[ip_address] = (1, datetime.now())
         else:
-            flash('Usuario o contraseña incorrectos', 'error')
+            attempts, _ = failed_attempts[ip_address]
+            failed_attempts[ip_address] = (attempts + 1, datetime.now())
+        
+        flash('Usuario o contraseña incorrectos', 'error')
     return render_template('index.html')
 
 @autentification_bp.route('/logout')
@@ -47,7 +77,7 @@ def register():
             flash('El usuario ya existe', 'error')
         else:
             # Guardar el nuevo usuario con la contraseña hasheada
-            hashed_password = generate_password_hash(password)
+            hashed_password = ph.hash(password)
             query_set(f"""
                 INSERT INTO users (username, master_password_hash)
                       VALUES ('{username}', '{hashed_password}')

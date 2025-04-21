@@ -2,3 +2,4 @@ instance/*
 !instance/.gitkeep
 **/__pycache__/
 *.pem
+/test/*.json
