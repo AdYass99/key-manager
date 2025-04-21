@@ -17,6 +17,7 @@
 4. **Seguridad**:
    - Las contraseñas se cifran utilizando AES-GCM.
    - La clave maestra se protege mediante hashing con Argon2.
+   - Protección contra ataques de fuerza bruta con bloqueos temporales.
 5. **Sesiones independientes**: Cada usuario tiene su propia sesión activa.
 6. **Soporte para HTTPS**: La aplicación puede ejecutarse con HTTPS para mayor seguridad.
 
@@ -49,7 +50,7 @@ key-manager
 │   └── passwords.db              # Base de datos SQLite
 ├── requirements.txt              # Dependencias del proyecto
 ├── run.py                        # Punto de entrada de la aplicación
-├── generate_cert.py              # Generacion de certificados (HTTPS)
+├── generate_cert.py              # Generación de certificados (HTTPS)
 ├── Dockerfile                    # Configuración para Docker
 ├── docker-compose.yaml           # Configuración para Docker Compose
 ├── .gitignore                    # Archivos ignorados por Git
