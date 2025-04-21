@@ -66,7 +66,7 @@ key-manager
 
 ### 1. Clonar el repositorio
 ```bash
-git clone <repository-url>
+git clone https://github.com/AdYass99/key-manager.git
 cd key-manager
 ```
 
@@ -104,7 +104,6 @@ python run.py
 ```
 
 ### 7. Acceder a la aplicación
-- **HTTP**: `http://127.0.0.1:5000/`
 - **HTTPS** (si configuraste certificados): `https://127.0.0.1:5000/`
 
 ---
@@ -161,8 +160,7 @@ docker-compose up
 ```
 
 ### Acceder a la aplicación
-- **HTTP**: `http://127.0.0.1:5000/`
-- **HTTPS**: Configura los certificados en el contenedor si es necesario.
+- **HTTPS**: `https://127.0.0.1:5000/`
 
 ---
 
@@ -171,7 +169,6 @@ docker-compose up
 - **Flask**: Framework web.
 - **pycryptodomex**: Para cifrado y descifrado de contraseñas.
 - **argon2-cffi**: Para hashing seguro de contraseñas.
-- **pyperclip**: Para copiar contraseñas al portapapeles.
 - **pyopenssl**: Para habilitar HTTPS.
 - **cryptography**: Para generar certificados SSL.
 
