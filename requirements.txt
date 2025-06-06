@@ -2,3 +2,4 @@ Flask
 pycryptodomex
 argon2-cffi
 pyopenssl
+flask-talisman
