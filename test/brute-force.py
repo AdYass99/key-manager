@@ -7,10 +7,10 @@ class TestBruteForceLogin(unittest.TestCase):
     def setUp(self):
         self.url = 'https://localhost:5000/login'
         self.user = 'user'  # Usa un usuario válido o inventado
-        self.passwords = ['123456', 'password', 'admin', 'letmein', 'qwerty']
-        self.passwords += ['123123', 'abc123', 'qwerty123', 'monkey', '111111']
-        self.passwords += ['123456789', '12345678', '12345', '1234567', '1234567890']
-        self.passwords += ['123456789', '1234567890', '12345678901', 'user']
+        self.passwords = ['123456', 'password', 'admin', 'letmein', 'qwerty',
+                          '123123', 'abc123', 'qwerty123', 'monkey', '111111',
+                          '123456789', '12345678', '12345', '1234567', '1234567890',
+                          '123456789', '1234567890', '12345678901', 'user']
         self.expected_failure_message = 'Búsqueda de Contraseña'
         self.results = []  # Lista para almacenar los resultados de todos los intentos
 
